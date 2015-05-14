@@ -1,28 +1,18 @@
-{-# Language DataKinds
-           , OverloadedStrings
-           , RecordWildCards
-           , DeriveDataTypeable
-           , GeneralizedNewtypeDeriving
-           , DeriveGeneric
-           , TemplateHaskell
-           #-}
 module Network.Google.Api.Youtube.Channels where
 
  -- https://developers.google.com/youtube/v3/docs/#Channels
 
 import Prelude             (Bool, Integer, Int, Show(..))
 import Data.Aeson          (Value)
-import Data.Aeson.TH       (deriveJSON)
 import Data.Text           (Text)
 import Data.Possible       (Possible)
 import Data.Typeable       (Typeable)
 import Data.Time.Clock     (UTCTime(..))
 import Data.HashMap.Strict (HashMap)
-import Control.Lens        (makeLenses)
 import GHC.Generics        (Generic)
-import Network.Google.Api.Utils    (optsL)
 import Network.Google.Api.Kinds    (AsStr, ListResponse, ApiKind)
 import Network.Google.Api.Youtube.Common
+import Network.Google.Api.UtilsTH    (thStuff)
 
 data YCContentDetails = YCContentDetails
   { _yccdGooglePlusUserId :: Text
@@ -92,26 +82,11 @@ type YCBrandingSettings = Value
 type YCInvideoPromotion = Value
 
 -- Borring TH stuff
-deriveJSON (optsL 5) ''YCSnippet
-makeLenses           ''YCSnippet
-
-deriveJSON (optsL 4) ''YCStatus
-makeLenses           ''YCStatus
-
-deriveJSON (optsL 5) ''YCTopicDetails
-makeLenses           ''YCTopicDetails
-
-deriveJSON (optsL 5) ''YCStatistics
-makeLenses           ''YCStatistics
-
-deriveJSON (optsL 5) ''YCContentDetails
-makeLenses           ''YCContentDetails
-
-deriveJSON (optsL 4) ''YCAuditDetails
-makeLenses           ''YCAuditDetails
-
-deriveJSON (optsL 5) ''YCContentOwnerDetails
-makeLenses           ''YCContentOwnerDetails
-
-deriveJSON (optsL 3) ''YoutubeChannel
-makeLenses           ''YoutubeChannel
+thStuff 5 ''YCSnippet
+thStuff 4 ''YCStatus
+thStuff 5 ''YCTopicDetails
+thStuff 5 ''YCStatistics
+thStuff 5 ''YCContentDetails
+thStuff 4 ''YCAuditDetails
+thStuff 5 ''YCContentOwnerDetails
+thStuff 3 ''YoutubeChannel

@@ -1,11 +1,10 @@
-{-# LANGUAGE DataKinds, ViewPatterns, ScopedTypeVariables, DeriveGeneric, TypeOperators, KindSignatures #-}
+{-# LANGUAGE ViewPatterns, ScopedTypeVariables, TypeOperators, KindSignatures #-}
 module Network.Google.Api.Kinds -- (ApiKind (..),ListResponse (..), AsStr(..))
  (module Network.Google.Api.Kinds )
  where
 
 import Data.Text (Text)
 import Data.Text as T
-
 import Prelude
 import Data.Aeson
 import Data.Aeson.Types
@@ -19,7 +18,6 @@ import Network.Google.Api.Utils
 import GHC.TypeLits
 import GHC.Generics
 
-
 data ApiKind (sym :: Symbol) = ApiKind
 
 instance KnownSymbol sym => Show (ApiKind sym ) where
@@ -31,7 +29,6 @@ instance KnownSymbol sym => FromJSON (ApiKind sym ) where
   parseJSON (String ( T.unpack -> a))
      | show (ApiKind :: ApiKind sym) == a = return ApiKind
   parseJSON  _ = mzero
-
 
 newtype AsStr a = AsStr a
 

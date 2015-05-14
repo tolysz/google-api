@@ -13,17 +13,15 @@ module Network.Google.Api.Youtube.Videos where
 
 import Prelude             (Show(..))
 import Data.Aeson          (Value)
-import Data.Aeson.TH       (deriveJSON)
 import Data.Text           (Text)
 import Data.Possible       (Possible)
 import Data.Typeable       (Typeable)
 import Data.Time.Clock     (UTCTime(..))
 import Data.HashMap.Strict (HashMap)
-import Control.Lens        (makeLenses)
 import GHC.Generics        (Generic)
-import Network.Google.Api.Utils    (optsL)
 import Network.Google.Api.Kinds    (ListResponse, ApiKind)
 import Network.Google.Api.Youtube.Common
+import Network.Google.Api.UtilsTH    (thStuff)
 
 type YoutubeVideos = ListResponse YoutubeVideo "youtube#videoListResponse"
 
@@ -57,7 +55,7 @@ data YVSnippet = YVSnippet
   , _yvsnLiveBroadcastContent :: Text
   } deriving  (Show, Typeable, Generic)
 
-type YVContentDetails = Value
+type YVContentDetails       = Value
 type YVStatus               = Value
 type YVStatistics           = Value
 type YVPlayer               = Value
@@ -68,8 +66,5 @@ type YVProcessingDetails    = Value
 type YVSuggestions          = Value
 type YVLiveStreamingDetails = Value
 
-deriveJSON (optsL 3) ''YoutubeVideo
-makeLenses           ''YoutubeVideo
-
-deriveJSON (optsL 5) ''YVSnippet
-makeLenses           ''YVSnippet
+thStuff 3 ''YoutubeVideo
+thStuff 5 ''YVSnippet

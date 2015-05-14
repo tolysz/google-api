@@ -1,29 +1,18 @@
-{-# Language DataKinds
-           , OverloadedStrings
-           , RecordWildCards
-           , DeriveDataTypeable
-           , GeneralizedNewtypeDeriving
-           , DeriveGeneric
-           , TemplateHaskell
-           #-}
-
 module Network.Google.Api.Youtube.Playlists where
 
  -- https://developers.google.com/youtube/v3/docs/#Playlists
 
 import Prelude             (Bool, Integer, Int, Show(..))
 import Data.Aeson          (Value)
-import Data.Aeson.TH       (deriveJSON)
 import Data.Text           (Text)
 import Data.Possible       (Possible)
 import Data.Typeable       (Typeable)
 import Data.Time.Clock     (UTCTime(..))
 import Data.HashMap.Strict (HashMap)
-import Control.Lens        (makeLenses)
 import GHC.Generics        (Generic)
-import Network.Google.Api.Utils    (optsL)
 import Network.Google.Api.Kinds    (AsStr, ListResponse, ApiKind)
 import Network.Google.Api.Youtube.Common
+import Network.Google.Api.UtilsTH    (thStuff)
 
 type YoutubePlaylists = ListResponse YoutubePlaylist "youtube#playlistListResponse"
 
@@ -34,7 +23,7 @@ data YPSnippet = YPSnippet
   , _ypsnDescription  :: Text
   , _ypsnThumbnails   :: HashMap Text YThumbnail
   , _ypsnTags         :: Possible [Text]
-  , _ypsnChannelTitle   :: Text
+  , _ypsnChannelTitle :: Text
   } deriving  (Show, Typeable, Generic)
 
 data YoutubePlaylist = YoutubePlaylist
@@ -51,8 +40,5 @@ type YPStatus         = Value
 type YPContentDetails = Value
 type YPPlayer         = Value
 
-deriveJSON (optsL 5) ''YPSnippet
-makeLenses           ''YPSnippet
-
-deriveJSON (optsL 3) ''YoutubePlaylist
-makeLenses           ''YoutubePlaylist
+thStuff 5 ''YPSnippet
+thStuff 3 ''YoutubePlaylist

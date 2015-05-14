@@ -19,6 +19,7 @@ library
                         -- google api module
   exposed-modules:   Network.Google.Api.Kinds
                      Network.Google.Api.Utils
+                     Network.Google.Api.UtilsTH
                      Network.Google.Api.Youtube.Common
                      Network.Google.Api.Youtube.Thumbnails
                      Network.Google.Api.Youtube.Search
@@ -39,7 +40,13 @@ library
 
   extensions: TemplateHaskell
               DeriveDataTypeable
-  -- other-modules:       
+              DataKinds
+              OverloadedStrings
+              DeriveDataTypeable
+              GeneralizedNewtypeDeriving
+              DeriveGeneric
+
+  -- other-modules:
   -- other-extensions:    
   build-depends:       base >=4.7 && < 5
                ,       aeson
