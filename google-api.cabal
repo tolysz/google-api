@@ -38,7 +38,7 @@ library
                      Network.Google.Api.Youtube.VideoCategories
                      Network.Google.Api.Youtube.Watermarks
 
-  extensions: TemplateHaskell
+  default-extensions: TemplateHaskell
               DeriveDataTypeable
               DataKinds
               OverloadedStrings

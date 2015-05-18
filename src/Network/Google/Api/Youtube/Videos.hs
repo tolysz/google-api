@@ -7,7 +7,8 @@
            , TemplateHaskell
            #-}
 
-module Network.Google.Api.Youtube.Videos where
+module Network.Google.Api.Youtube.Videos
+where
 
  -- https://developers.google.com/youtube/v3/docs/#Videos
 
@@ -21,7 +22,11 @@ import Data.HashMap.Strict (HashMap)
 import GHC.Generics        (Generic)
 import Network.Google.Api.Kinds    (ListResponse, ApiKind)
 import Network.Google.Api.Youtube.Common
-import Network.Google.Api.UtilsTH    (thStuff)
+-- import Network.Google.Api.UtilsTH    (thStuff)
+
+import Data.Aeson.TH             (deriveJSON)
+import Control.Lens              (makeLenses)
+import Network.Google.Api.Utils  (optsL)
 
 type YoutubeVideos = ListResponse YoutubeVideo "youtube#videoListResponse"
 
@@ -55,6 +60,8 @@ data YVSnippet = YVSnippet
   , _yvsnLiveBroadcastContent :: Text
   } deriving  (Show, Typeable, Generic)
 
+
+
 type YVContentDetails       = Value
 type YVStatus               = Value
 type YVStatistics           = Value
@@ -66,5 +73,9 @@ type YVProcessingDetails    = Value
 type YVSuggestions          = Value
 type YVLiveStreamingDetails = Value
 
-thStuff 3 ''YoutubeVideo
-thStuff 5 ''YVSnippet
+
+deriveJSON (optsL 5) ''YVSnippet
+makeLenses           ''YVSnippet
+
+deriveJSON (optsL 3) ''YoutubeVideo
+makeLenses           ''YoutubeVideo

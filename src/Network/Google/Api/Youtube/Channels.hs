@@ -12,7 +12,11 @@ import Data.HashMap.Strict (HashMap)
 import GHC.Generics        (Generic)
 import Network.Google.Api.Kinds    (AsStr, ListResponse, ApiKind)
 import Network.Google.Api.Youtube.Common
-import Network.Google.Api.UtilsTH    (thStuff)
+-- import Network.Google.Api.UtilsTH    (thStuff)
+import Data.Aeson.TH             (deriveJSON)
+import Control.Lens              (makeLenses)
+import Network.Google.Api.Utils  (optsL)
+
 
 data YCContentDetails = YCContentDetails
   { _yccdGooglePlusUserId :: Text
@@ -82,11 +86,26 @@ type YCBrandingSettings = Value
 type YCInvideoPromotion = Value
 
 -- Borring TH stuff
-thStuff 5 ''YCSnippet
-thStuff 4 ''YCStatus
-thStuff 5 ''YCTopicDetails
-thStuff 5 ''YCStatistics
-thStuff 5 ''YCContentDetails
-thStuff 4 ''YCAuditDetails
-thStuff 5 ''YCContentOwnerDetails
-thStuff 3 ''YoutubeChannel
+deriveJSON (optsL 5) ''YCSnippet
+makeLenses           ''YCSnippet
+
+deriveJSON (optsL 4) ''YCStatus
+makeLenses           ''YCStatus
+
+deriveJSON (optsL 5) ''YCTopicDetails
+makeLenses           ''YCTopicDetails
+
+deriveJSON (optsL 5) ''YCStatistics
+makeLenses           ''YCStatistics
+
+deriveJSON (optsL 5) ''YCContentDetails
+makeLenses           ''YCContentDetails
+
+deriveJSON (optsL 4) ''YCAuditDetails
+makeLenses           ''YCAuditDetails
+
+deriveJSON (optsL 5) ''YCContentOwnerDetails
+makeLenses           ''YCContentOwnerDetails
+
+deriveJSON (optsL 3) ''YoutubeChannel
+makeLenses           ''YoutubeChannel

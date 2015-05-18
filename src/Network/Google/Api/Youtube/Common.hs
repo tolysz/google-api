@@ -14,7 +14,11 @@ import Data.Typeable       (Typeable)
 import Data.HashMap.Strict (HashMap)
 import GHC.Generics        (Generic)
 import Network.Google.Api.Kinds    (AsStr, ListResponse, ApiKind)
-import Network.Google.Api.UtilsTH    (thStuff)
+-- import Network.Google.Api.UtilsTH    (thStuff)
+
+import Data.Aeson.TH             (deriveJSON)
+import Control.Lens              (makeLenses)
+import Network.Google.Api.Utils  (optsL)
 
 data YThumbnail = YThumbnail
   { _ytUrl    :: Text
@@ -33,5 +37,5 @@ data YThumbnail = YThumbnail
 -- deriveJSON optsL4 ''YCSnippet
 -- makeLenses        ''YCSnippet
 
-thStuff 3 ''YThumbnail
-
+deriveJSON (optsL 3) ''YThumbnail
+makeLenses           ''YThumbnail

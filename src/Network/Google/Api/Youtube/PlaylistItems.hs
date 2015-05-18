@@ -12,7 +12,11 @@ import Data.HashMap.Strict (HashMap)
 import GHC.Generics        (Generic)
 import Network.Google.Api.Kinds    (AsStr, ListResponse, ApiKind)
 import Network.Google.Api.Youtube.Common
-import Network.Google.Api.UtilsTH    (thStuff)
+-- import Network.Google.Api.UtilsTH    (thStuff)
+import Data.Aeson.TH             (deriveJSON)
+import Control.Lens              (makeLenses)
+import Network.Google.Api.Utils  (optsL)
+
 
 type YoutubePlaylistItems = ListResponse YoutubePlaylistItem "youtube#playlistItemListResponse"
 
@@ -29,4 +33,5 @@ type YPISnippet        = Value
 type YPIStatus         = Value
 type YPIContentDetails = Value
 
-thStuff 4 ''YoutubePlaylistItem
+deriveJSON (optsL 4) ''YoutubePlaylistItem
+makeLenses           ''YoutubePlaylistItem
